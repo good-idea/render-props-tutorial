@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router'
 import Homepage from './Homepage'
 import Nav from './Nav'
 import About from './About'
-import Contact from './Contact'
 import NotFound from './NotFound'
 import './App.css'
 
@@ -15,7 +14,6 @@ class App extends Component {
 				<Switch>
 					<Route path="/" exact component={Homepage} />
 					<Route path="/about" exact component={About} />
-					<Route path="/contact" exact component={Contact} />
 					<Route component={NotFound} />
 				</Switch>
 			</div>
