@@ -31,7 +31,8 @@ class Tabs extends React.Component {
 		this.updateHistory()
 	}
 
-	updateHistory() {
+	updateHistory = () => {
+		console.log(this.props)
 		const { currentTab } = this.state
 		const { history } = this.props
 		const { push, location } = history

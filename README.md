@@ -1,68 +1,57 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Render Props Tutorial
 
-## Available Scripts
+## Challenge 1: Alternate Uses
 
-In the project directory, you can run:
+Let's use our `<Tabs>` component to do something else. We've named it "Tabs", but really it's only doing two things:
 
-### `npm start`
+- Giving us a number
+- And a way to update that number
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+We can use this for much more than just rendering tabs (We'll cover that in the next challenge). In `Sonnet.js`, finish writing the `<Sonnet>` component to display only words of a certain length. It should look something like this when you are done:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+![Challenge 1 demo](./assets/challenge1.gif)
 
-### `npm test`
+Notes:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Don't worry about how punctuation marks are included in the word length.
+- Try to do this by working _only_ within the `<Sonnet>` component. (Feel free to break this into other files or components)
 
-### `npm run build`
+## Challenge 2: Refactor
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+We've found that we can use our `<Tabs>` component to do things other than rendering tabs. Also, we need to supply it with a `location`, `history`, and `initialTab` prop manually every time we use it. Let's make it all simpler and more flexible.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Steps:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.  Rename the `<Tabs>` component, the `initialTab` prop and `currentTab`, `switchTab` render props to something that makes more sense. (I'm going to keep referring to them as 'tabs' in these instructions)
+2.  Wrap the default export with `withRouter()` (see the comments in Tabs.js)
+3.  Now that we don't need to supply this component with route info manually, remove the wrapping `<Route>` components that give it the `location`, `history`, and `initialTab` props. (In Homepage.js and Sonnet.js)
+4.  Have the `<Tabs>` component determine the initial tab on its own, based on the location prop.
+    - Hint: either handle this in the constructor, or make a function that you can pass some props to, i.e. `this.state = { currentTab: getCurrentTab(this.props) || 0 }`
+5.  Add `increase` and `decrease` methods and provide them with the render props.
+6.  Now that we have a simpler API, go back and change the implementation of `<Sonnet>`
 
-### `npm run eject`
+**Test that you can still switch tabs between each step!!**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Challenge 3: React Router Parameters and working with an API
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now that we have this working for one sonnet, let's make this a little more dynamic. First, [read up on how to use URL parameters with React Router](https://tylermcginnis.com/react-router-url-parameters/).
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Next:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Change the `/sonnet` route to `/sonnets`, and have it display a list of sonnet titles.
 
-## Learn More
+- Fetch these titles at `https://sonnets-api.now.sh/api/sonnets/toc`
+- Have each of these titles render a `<Link>` to `/sonnet/N`, where N is the number of that sonnet
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Create a new route: `/sonnet/:number`. Using the URL param from react router, fetch and display that sonnet.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Fetch sonnets at the endpoint `https://sonnets-api.now.sh/api/sonnets/{number}`
 
-### Code Splitting
+(the code for this API is at https://www.github.com/good-idea/sonnet-api in case you want to take a look at a simple express app!)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Stretch Goals
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- When determining the length of a word in the `<Sonnet>` component, **do not count punctuation marks**.
+- Give a `min` and `max` prop to your (renamed!) `<Tabs>` component and ensure that the (renamed!) `currentTab` does not exceed them.
+- Implement a 'Not Found' view
+- Show a 'There is no sonnet with this number' view if someone goes to a sonnet page with a number that doesn't correspond with a sonnet.
