@@ -38,14 +38,28 @@ Now that we have this working for one sonnet, let's make this a little more dyna
 
 Next:
 
-1. Change the `/sonnet` route to `/sonnets`, and have it display a list of sonnet titles.
+1. Change the `/sonnet` route to `/sonnets`, and have make a new component to display a list of sonnet titles.
 
 - Fetch these titles at `https://sonnets-api.now.sh/api/sonnets/toc`
-- Have each of these titles render a `<Link>` to `/sonnet/N`, where N is the number of that sonnet
+- Have each of these titles render a `<Link>` to `/sonnet/[sonnet-number]`, where N is the number of that sonnet
 
 2. Create a new route: `/sonnet/:number`. Using the URL param from react router, fetch and display that sonnet.
 
-- Fetch sonnets at the endpoint `https://sonnets-api.now.sh/api/sonnets/{number}`
+- HINT: Your routes in App.js will look something like this:
+
+  ```
+   <Switch>
+      <Route path="/" exact component={Homepage} />
+      <Route path="/sonnets" exact component={SonnetList} />
+      <Route path="/sonnet/:number" exact component={Sonnet} />
+   </Switch>
+
+  ```
+
+3. Modify your `<Sonnet>` component to display sonnets dynamically.
+
+- React Router will give your Sonnect component a `match` prop. Take a look at `match.params` in the console to see how to get the number that is provided in the URL.
+- Fetch the sonnet at the endpoint `https://sonnets-api.now.sh/api/sonnets/{number}`
 
 (the code for this API is at https://www.github.com/good-idea/sonnet-api in case you want to take a look at a simple express app!)
 

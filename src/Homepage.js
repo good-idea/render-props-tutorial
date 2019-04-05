@@ -17,7 +17,7 @@ const Tab = props => {
 	)
 }
 
-const Homepage = () => {
+const Homepage = props => {
 	return (
 		<main>
 			<h1>Homepage</h1>
@@ -86,7 +86,6 @@ const Homepage = () => {
 					)
 				}}
 			</Route>
-			/>
 		</main>
 	)
 }
