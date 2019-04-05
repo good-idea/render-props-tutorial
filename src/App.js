@@ -12,8 +12,7 @@ class App extends Component {
 				<Nav />
 				<Switch>
 					<Route path="/" exact component={Homepage} />
-					<Route path="/sonnets" exact component={SonnetList} />
-					<Route path="/sonnet/:number" exact component={Sonnet} />
+					<Route path="/sonnet" exact component={Sonnet} />
 				</Switch>
 			</div>
 		)
